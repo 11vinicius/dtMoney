@@ -1,10 +1,10 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useContext } from 'react';
 import Modal from 'react-modal';
-import closeImg from '../../assets/close.svg';
-import { api } from '../../services/api';
+import { TransactionsContext } from '../../TransactionContext';
 
 import income from '../../assets/income.svg';
 import outcome from '../../assets/outcome.svg';
+import closeImg from '../../assets/close.svg';
 
 
 import { Container, TransactionTypeContainer, RadioBox } from './style';
@@ -15,21 +15,30 @@ interface NewTramnsactionModalProps{
 }
 
 export function TransactionModal({isOpen,onRequestClose}: NewTramnsactionModalProps){
+    const { createTransaction } = useContext(TransactionsContext);
+   
     const [title, setTitle] = useState('');
-    const [value, setValue] = useState(0);
+    const [amount, setAmount] = useState(0);
     const [category, setCategory] = useState('');
-
     const [type, setType] = useState('deposit');
+
+
     
-
-
-    function handleCreateTransaction(event:FormEvent){
+    async function handleCreateTransaction(event:FormEvent){
         event.preventDefault();
-        const data = {
-          title, value, category, type
-        };
+        console.log(title);
+        await createTransaction({
+            title,
+            amount,
+            category,
+            type
+        });
 
-        api.post('/transactions',data);
+        setTitle('');
+        setAmount(0);
+        setCategory('');
+        setType('deposit');
+        onRequestClose();
     }
 
     return (
@@ -56,8 +65,8 @@ export function TransactionModal({isOpen,onRequestClose}: NewTramnsactionModalPr
                 <input 
                     type="number"
                     placeholder="Valor"
-                    value={value}
-                    onChange={event=>setValue(Number(event.target.value))}
+                    value={amount}
+                    onChange={event=>setAmount(Number(event.target.value))}
                 />
 
                 <TransactionTypeContainer>
@@ -74,7 +83,7 @@ export function TransactionModal({isOpen,onRequestClose}: NewTramnsactionModalPr
 
                     <RadioBox 
                         type="button"
-                        onClick = {()=>{setType('withdraw')}}
+                        onClick = {()=>{setType('withdrow')}}
                         isActive = {type === 'withdrow'}
                         activeColor = "red"
 

@@ -5,6 +5,8 @@ import { TransactionsContext } from './TransactionContext';
 
 
 import { GlobalStyle } from './styles/global';
+import { TransactionProvider } from './TransactionContext';
+
 import { Header } from './Components/Header';
 import { DashBoard } from './Components/Dashborard';
 import { TransactionModal } from './Components/NewTransactionModal';
@@ -23,12 +25,12 @@ export function App() {
   }
 
   return (
-    <TransactionsContext.Provider value={[]}>
+    <TransactionProvider>
       <Header onOpenNewTransactionModal={handleOpenNewTransactionModal}/>
       <DashBoard/>
       <TransactionModal isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal}/>
       <GlobalStyle/>
-    </TransactionsContext.Provider>
+    </TransactionProvider>
   );
 }
 
