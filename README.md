@@ -36,10 +36,10 @@ Foi desenvolvida utilizando as seguinte tecnologias.
 ```bash
 
 #Clona o repositório
-  $ git clone https://github.com/11vinicius/gobarber.git
+  $ git clone https://github.com/11vinicius/dtMoney
 
 #Entrar no diretório
-  $ cd gobarber
+  $ cd dtmoney
 
 #Instalar as dependencias
   $ yarn install
